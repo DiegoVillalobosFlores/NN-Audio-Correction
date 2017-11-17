@@ -9,7 +9,7 @@ t = linspace(0, n/fs, n);
 pN = 30;
 
 nY = y;
-for cont = 1:n
+for cont = 10:n
     r = 100.*rand(1,1) + 1;
     if(r <= pN)
         nY(cont,1) = 0;
@@ -37,6 +37,6 @@ subplot(3,1,3);
 plot(t,nY);
 xlabel('Segundos');
 ylabel('Amplitud');
-title("Señal con Ruido Gaussiano");
+title("Señal con Ruido");
 
-%%sound(gnY,fs);
+%sound(nY,fs);
