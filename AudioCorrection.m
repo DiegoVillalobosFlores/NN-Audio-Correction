@@ -9,9 +9,7 @@ n = length(y);
 t = linspace(0, n/fs, n);
 target = y;
 
-pN = 30;
-
-yParsed = y(690194:690220) * 10;
+pN = 3;
 
 nY = yParsed;
 for cont = 1:length(nY)
@@ -22,13 +20,20 @@ for cont = 1:length(nY)
     end
 end
 
+noiseY = y;
+for cont = 1:length(noiseY)
+    r = 100.*rand(1,1) + 1;
+    if(r <= pN)
+        noiseY(cont,1) = 0;
+        noiseY(cont,2) = 0;
+    end
+end
+
 tln1 = 1:length(nY);
 gnY = awgn(y,1,'measured');
 
 net = feedforwardnet([10 10]);
 net = configure(net,nY,yParsed);
-figure();
-plot(tln1,yParsed(:,2),'o');
 
 ny1 = net(nY);
 
@@ -57,4 +62,10 @@ xlabel('Segundos');
 ylabel('Amplitud');
 title("Señal con Ruido");
 
-%sound(nY,fs);
+
+%filtro = ones(1,fs)/fs;
+%filtrada = filter(filtro,1,y);
+
+% player = audioplayer(noiseY,fs);
+% player.stop;
+% player.play;
